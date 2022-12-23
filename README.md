@@ -27,8 +27,8 @@ services:
     ports:
       - "6080:80"
     volumes:
-      - ./root.json:/Sub-Store/backend/root.json
-      - ./sub-store.json:/Sub-Store/backend/sub-store.json
+      - ./root.json:/Sub-Store/root.json
+      - ./sub-store.json:/Sub-Store/sub-store.json
       - ./crontab:/var/spool/cron/crontabs/root
     environment:
       - TZ=Asia/Shanghai
@@ -49,8 +49,8 @@ services:
     ports:
       - "6080:80"
     volumes:
-      - ./root.json:/Sub-Store/backend/root.json
-      - ./sub-store.json:/Sub-Store/backend/sub-store.json
+      - ./root.json:/Sub-Store/root.json
+      - ./sub-store.json:/Sub-Store/sub-store.json
       - ./crontab:/var/spool/cron/crontabs/root
     environment:
       - TZ=Asia/Shanghai

@@ -1,8 +1,14 @@
 :80 {
         encode gzip
-        respond / "Hello, world!"
-        reverse_proxy /api/* localhost:3000
-        reverse_proxy /download/* localhost:3000
+        handle /api/* {
+                reverse_proxy localhost:3000
+        }
+        handle /download/* {
+                reverse_proxy localhost:3000
+        }
+        handle {
+                respond / "Hello, world!"
+        }
         handle_errors {
                 respond "{err.status_code} {err.status_text}"
         }

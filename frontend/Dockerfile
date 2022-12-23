@@ -17,7 +17,7 @@ RUN apk add --no-cache nodejs npm tzdata git caddy curl supervisor && \
     cp /git/frontend/Caddyfile /etc/caddy/Caddyfile && \
     rm -rf /git/.git && \
     apk del git tzdata && \
-    sed -i "s|https://sub.store|/|g" `grep https://sub.store -rl $(pwd)/dist`
+    sed -i "s|https://sub.store|/|g" `grep https://sub.store -rl /git/dist`
 
 WORKDIR /Sub-Store
 
