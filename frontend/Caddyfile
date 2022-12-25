@@ -7,7 +7,7 @@
                 reverse_proxy localhost:3000
         }
         handle {
-                root * /git/dist
+                root * /git/public
                 try_files {path} /
                 file_server
         }

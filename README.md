@@ -29,7 +29,6 @@ services:
     volumes:
       - ./root.json:/Sub-Store/root.json
       - ./sub-store.json:/Sub-Store/sub-store.json
-      - ./crontab:/var/spool/cron/crontabs/root
     environment:
       - TZ=Asia/Shanghai
 ```
@@ -51,9 +50,9 @@ services:
     volumes:
       - ./root.json:/Sub-Store/root.json
       - ./sub-store.json:/Sub-Store/sub-store.json
-      - ./crontab:/var/spool/cron/crontabs/root
     environment:
       - TZ=Asia/Shanghai
+      - DOMAIN=http://youdomain
 ```
 
 将上面内容调整后放到服务器 `docker-compose.yml` 中
@@ -63,7 +62,6 @@ services:
 ``` sh
 echo "{}" > ./sub-store.json
 echo "{}" > ./root.json
-echo "0 */6 * * * /usr/bin/curl http://127.0.0.1/api/sync/artifacts && /usr/bin/curl http://127.0.0.1/api/utils/refresh >> /release/sync.log" > ./crontab
 ```
 
 一切准备就绪后在 `docker-compose.yml` 同目录执行

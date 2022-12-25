@@ -1,8 +1,10 @@
 FROM alpine:latest
 
+ARG TARGETOS TARGETARCH
+
 RUN apk add --no-cache nodejs npm tzdata git caddy curl supervisor && \
-    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     rm -fr /var/cache/apk/* && \
+    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     npm install -g pnpm && \
     git clone https://github.com/sub-store-org/Sub-Store.git /Sub-Store && \
     rm -rf /Sub-Store/.git && \
@@ -16,8 +18,10 @@ RUN apk add --no-cache nodejs npm tzdata git caddy curl supervisor && \
     rm -f /etc/caddy/Caddyfile && \
     cp /git/backend/Caddyfile /etc/caddy/Caddyfile && \
     rm -rf /git/.git && \
+    curl -fsSLo /usr/bin/supercronic https://github.com/aptible/supercronic/releases/latest/download/supercronic-${TARGETOS}-${TARGETARCH} && \
+    chmod +x /usr/bin/supercronic && \
     apk del git tzdata
 
 WORKDIR /Sub-Store
 
-ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+ENTRYPOINT ["/bin/sh","/git/docker-entrypoint.sh" ]
