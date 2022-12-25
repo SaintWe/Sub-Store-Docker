@@ -17,27 +17,6 @@
 ``` yml
 version: '3'
 
-# 请注意，该镜像不含前端
-services:
-  substore:
-    image: saintwe/sub-store-backend:latest
-    container_name: substore
-    restart: always
-    shm_size: 512mb
-    ports:
-      - "6080:80"
-    volumes:
-      - ./root.json:/Sub-Store/root.json
-      - ./sub-store.json:/Sub-Store/sub-store.json
-    environment:
-      - TZ=Asia/Shanghai
-```
-
-**或**
-
-``` yml
-version: '3'
-
 # 该镜像含前端
 services:
   substore:
@@ -52,7 +31,8 @@ services:
       - ./sub-store.json:/Sub-Store/sub-store.json
     environment:
       - TZ=Asia/Shanghai
-      - DOMAIN=http://youdomain
+      # 如需使用前端请取消注释
+      # - DOMAIN=http://youdomain
 ```
 
 将上面内容调整后放到服务器 `docker-compose.yml` 中

@@ -11,12 +11,10 @@ RUN apk add --no-cache nodejs npm tzdata git caddy curl supervisor && \
     cd /Sub-Store/backend && \
     pnpm install && \
     pnpm run build && \
-    mkdir /git && \
     git clone https://github.com/SaintWe/Sub-Store-Docker.git /git && \
     cd /git && \
     cp --parents ./supervisor/supervisord.conf /etc/ && \
     rm -f /etc/caddy/Caddyfile && \
-    cp /git/frontend/Caddyfile /etc/caddy/Caddyfile && \
     rm -rf /git/.git && \
     curl -fsSLo /usr/bin/supercronic https://github.com/aptible/supercronic/releases/latest/download/supercronic-${TARGETOS}-${TARGETARCH} && \
     chmod +x /usr/bin/supercronic && \
