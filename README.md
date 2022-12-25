@@ -23,7 +23,6 @@ services:
     image: saintwe/sub-store:latest
     container_name: substore
     restart: always
-    shm_size: 512mb
     ports:
       - "6080:80"
     volumes:
