@@ -57,4 +57,4 @@ jobs:
           git config --global user.name "GitHub Action"
           git add .
           git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')" \
-          git push --force --quiet "https://$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" main:main  \
+          git push --quiet "https://$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" main:main  \
