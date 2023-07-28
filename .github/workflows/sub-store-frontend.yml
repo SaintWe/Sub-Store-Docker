@@ -22,19 +22,19 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         id: pnpm-install
         with:
-          version: latest
+          version: 7
           run_install: false
 
       - name: Install and Build
         run: |
           cd ..
-          git clone https://github.com/sub-store-org/Sub-Store-Front-End.git
+          git clone -b mod https://github.com/SaintWe/Sub-Store-Front-End.git
           cd Sub-Store-Front-End
           pnpm install
           pnpm run build
