@@ -56,5 +56,5 @@ jobs:
           git config --global user.email "Action@GitHub.com"
           git config --global user.name "GitHub Action"
           git add .
-          git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')" \
-          git push --quiet "https://$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" main:main  \
+          git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')"
+          git push --quiet "https://$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" main:main
