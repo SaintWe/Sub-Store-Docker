@@ -10,7 +10,11 @@
 
 特别感谢：[@dompling](https://github.com/dompling)
 
+# 请注意，该镜像的前端部分已替换为 [SaintWe/Sub-Store-Front-End](https://github.com/SaintWe/Sub-Store-Front-End)
+
 *注意：由于后端不含身份认证，在公网使用请自行做相关的保护*
+
+重新构建了 [Cloudflare Workers 版的 Sub-Store](https://github.com/SaintWe/Sub-Store-Workers) 已实现基于 http authorization bearer 身份认证，前端部分已适配
 
 ## Docker-compose 部署
 
@@ -30,13 +34,13 @@ services:
       - ./sub-store.json:/Sub-Store/sub-store.json
     environment:
       - TZ=Asia/Shanghai
-      # 如需使用前端请取消注释
+      # 如需使用前端请取消注释，用于修改默认的后端地址
       # - DOMAIN=http://youdomain
 ```
 
 将上面内容调整后放到服务器 `docker-compose.yml` 中
 
-在 `docker-compose.yml` 同目录中执行下面 3 条命令
+在 `docker-compose.yml` 同目录中执行下面 2 条命令
 
 ``` sh
 echo "{}" > ./sub-store.json
