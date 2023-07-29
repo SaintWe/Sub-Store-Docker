@@ -10,13 +10,15 @@
 
 特别感谢：[@dompling](https://github.com/dompling)
 
-# 请注意，该镜像的前端部分已替换为 [SaintWe/Sub-Store-Front-End](https://github.com/SaintWe/Sub-Store-Front-End)
+# 请注意，该镜像的前端部分已替换为 [SaintWe/Sub-Store-Front-End](https://github.com/SaintWe/Sub-Store-Front-End)，若有疑请避免使用
 
 *注意：由于后端不含身份认证，在公网使用请自行做相关的保护*
 
-重新构建了 [Cloudflare Workers 版的 Sub-Store](https://github.com/SaintWe/Sub-Store-Workers) 已实现基于 http authorization bearer 身份认证，前端部分已适配
+**重新构建了 [Cloudflare Workers 版的 Sub-Store](https://github.com/SaintWe/Sub-Store-Workers) 已实现基于 http authorization bearer 身份认证，前端部分已适配**
 
 ## Docker-compose 部署
+
+*在 NODE 环境下运行或可能遇到缓存不清理的问题*
 
 ``` yml
 version: '3'
@@ -35,10 +37,17 @@ services:
     environment:
       - TZ=Asia/Shanghai
       # 如需使用前端请取消注释，用于修改默认的后端地址
+      # 仅推荐您在内网环境下使用镜像自带的前端
       # - DOMAIN=http://youdomain
 ```
 
 将上面内容调整后放到服务器 `docker-compose.yml` 中
+
+**仅推荐您在内网环境下使用镜像自带的前端，公网下可使用下述 2 个由我构建的前端，或您自行构建**
+
+- **Vercel**：<https://sub-store-workers.vercel.app>
+- **Cloudflare Pages**：<https://sub-store-workers.pages.dev>
+- [关于前端的更多使用细节](https://github.com/SaintWe/Sub-Store-Workers#%E5%89%8D%E7%AB%AF)
 
 在 `docker-compose.yml` 同目录中执行下面 2 条命令
 
@@ -80,6 +89,5 @@ sed -i "s|https://sub.store|https://youdomain|g" `grep https://sub.store -rl $(p
 
 ## 结束语
 
-> 感谢 [@dompling](https://github.com/dompling)
-
-> 感谢 [@Peng-YM](https://github.com/Peng-YM/Sub-Store) 大佬的无私奉献将代码开源
+- 感谢 [@dompling](https://github.com/dompling)
+- 感谢 [@Peng-YM](https://github.com/Peng-YM/Sub-Store) 大佬的无私奉献将代码开源
