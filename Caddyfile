@@ -1,0 +1,31 @@
+:80 {
+        @api_not_auth {
+                path /api/*
+        }
+        @api_auth {
+                path /api/*
+                header Authorization "Bearer __Bearer_Token__"
+        }
+        @download_not_auth {
+                path /download/*
+        }
+        @download_auth {
+                path /download/*
+                query d_token=__Download_Token__
+        }
+
+        encode gzip
+        handle __api_handle__ {
+                reverse_proxy localhost:3000
+        }
+        handle __download_handle__ {
+                reverse_proxy localhost:3000
+        }
+        ##____import /git/frontend/Caddyfile
+        handle {
+                respond / "Hello, world!"
+        }
+        handle_errors {
+                respond "{err.status_code} {err.status_text}"
+        }
+}

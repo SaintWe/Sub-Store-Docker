@@ -3,7 +3,7 @@
 <img width="200" src="https://raw.githubusercontent.com/58xinian/icon/master/Sub-Store1.png" alt="Sub-Store">
 <br>
 <br>
-<h2 align="center">Sub-Store VPS 部署<h2>
+<h2 align="center">Sub-Store Docker<h2>
 </div>
 
 项目修改于：<https://github.com/dompling/DockerFiles/tree/master/Sub-Store>
@@ -12,13 +12,11 @@
 
 # 请注意，该镜像的前端部分已替换为 [SaintWe/Sub-Store-Front-End](https://github.com/SaintWe/Sub-Store-Front-End)，若有疑请避免使用
 
-*注意：由于后端不含身份认证，在公网使用请自行做相关的保护*
-
 **重新构建了 [Cloudflare Workers 版的 Sub-Store](https://github.com/SaintWe/Sub-Store-Workers) 已实现基于 http authorization bearer 身份认证，前端部分已适配**
 
-## Docker-compose 部署
+**该 Docker 仍然使用 <https://github.com/sub-store-org/Sub-Store>，仅在 Caddy 上实现了与 <https://github.com/SaintWe/Sub-Store-Workers> 逻辑相同的身份认证**
 
-*在 NODE 环境下运行或可能遇到缓存不清理的问题*
+## Docker-compose 部署
 
 ``` yml
 version: '3'
@@ -36,6 +34,13 @@ services:
       - ./sub-store.json:/Sub-Store/sub-store.json
     environment:
       - TZ=Asia/Shanghai
+
+      # 设置后端的身份认证，随机生成大小写字母+数字填入即可，在公网环境下请务必使用
+      # - BEARER_TOKEN=
+
+      # 设置后端提取或预览节点的认证，随机生成大小写字母+数字填入即可，在公网环境下请务必使用
+      # - D_TOKEN=
+
       # 如需使用前端请取消注释，用于修改默认的后端地址
       # 仅推荐您在内网环境下使用镜像自带的前端
       # - DOMAIN=http://youdomain
@@ -49,10 +54,11 @@ services:
 - **Cloudflare Pages**：<https://sub-store-workers.pages.dev>
 - [关于前端的更多使用细节](https://github.com/SaintWe/Sub-Store-Workers#%E5%89%8D%E7%AB%AF)
 
-在 `docker-compose.yml` 同目录中执行下面 2 条命令
+在 `docker-compose.yml` 同目录中执行下面的命令
 
 ``` sh
 echo "{}" > ./sub-store.json
+
 echo "{}" > ./root.json
 ```
 
@@ -78,16 +84,7 @@ docker-compose restart
 docker-compose down
 ```
 
-## 前端
-
-Fork 此仓库配合 [Cloudflare Pages](https://pages.cloudflare.com/) 以及 [Zero Trust](https://one.dash.cloudflare.com/) 的访问策略可实现前端的身份认证
-
-```
-# 构建命令
-sed -i "s|https://sub.store|https://youdomain|g" `grep https://sub.store -rl $(pwd)/dist`
-```
-
 ## 结束语
 
 - 感谢 [@dompling](https://github.com/dompling)
-- 感谢 [@Peng-YM](https://github.com/Peng-YM/Sub-Store) 大佬的无私奉献将代码开源
+- 感谢 [@Peng-YM](https://github.com/Peng-YM) 大佬的无私奉献将代码开源
