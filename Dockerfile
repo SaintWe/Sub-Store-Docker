@@ -7,7 +7,6 @@ RUN apk add --no-cache nodejs npm tzdata git caddy curl supervisor && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     npm install -g pnpm && \
     git clone https://github.com/sub-store-org/Sub-Store.git /Sub-Store && \
-    rm -rf /Sub-Store/.git && \
     cd /Sub-Store/backend && \
     pnpm install && \
     pnpm run build && \
@@ -18,8 +17,12 @@ RUN apk add --no-cache nodejs npm tzdata git caddy curl supervisor && \
     rm -rf /git/.git && \
     curl -fsSLo /usr/bin/supercronic https://github.com/aptible/supercronic/releases/latest/download/supercronic-${TARGETOS}-${TARGETARCH} && \
     chmod +x /usr/bin/supercronic && \
-    apk del git tzdata
+    cp /Sub-Store/backend/sub-store.min.js /git && \
+    rm -rf /Sub-Store && \
+    rm -rf $(pnpm store path) && \
+    npm uninstall -g pnpm && \
+    apk del git tzdata npm
 
-WORKDIR /Sub-Store
+WORKDIR /git
 
 ENTRYPOINT ["/bin/sh","/git/docker-entrypoint.sh" ]
