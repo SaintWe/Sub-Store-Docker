@@ -1,26 +1,31 @@
 :80 {
-        @api_not_auth {
-                path /api/*
-        }
-        @api_auth {
-                path /api/*
-                header Authorization "Bearer __Bearer_Token__"
-        }
-        @download_not_auth {
-                path /download/*
-        }
-        @download_auth {
-                path /download/*
-                query d_token=__Download_Token__
-        }
+        @api_auth      header Authorization "Bearer __Bearer_Token__"
+        @download_auth query  d_token=__Download_Token__
 
         encode gzip
-        handle __api_handle__ {
-                reverse_proxy localhost:3000
+
+        handle /api/* {
+                handle __api_handle__ {
+                        reverse_proxy localhost:3000
+                }
+                handle {
+                        respond "Unauthorized" 401 {
+                                close
+                        }
+                }
         }
-        handle __download_handle__ {
-                reverse_proxy localhost:3000
+
+        handle /download/* {
+                handle __download_handle__ {
+                        reverse_proxy localhost:3000
+                }
+                handle {
+                        respond "由于开启了 d_token 验证，当前 d_token 不正确或未提供" 401 {
+                                close
+                        }
+                }
         }
+
         ##____import /git/frontend/Caddyfile
         handle {
                 respond / "Hello, world!"
