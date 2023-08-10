@@ -18,6 +18,14 @@
 
 ## Docker-compose 部署
 
+``` sh
+# 使用前端
+docker run -d --name substore --restart always -v $(pwd)/data:/Sub-Store -p 6080:80 -e BEARER_TOKEN=替换 -e D_TOKEN=替换 -e DOMAIN=替换 -e TZ=Asia/Shanghai saintwe/sub-store:latest
+
+# 不使用前端
+docker run -d --name substore --restart always -v $(pwd)/data:/Sub-Store -p 6080:80 -e BEARER_TOKEN=替换 -e D_TOKEN=替换 -e TZ=Asia/Shanghai saintwe/sub-store:latest
+```
+
 ``` yml
 version: '3'
 
@@ -30,8 +38,7 @@ services:
     ports:
       - "6080:80"
     volumes:
-      - ./root.json:/Sub-Store/root.json
-      - ./sub-store.json:/Sub-Store/sub-store.json
+      - ./data:/Sub-Store
     environment:
       - TZ=Asia/Shanghai
 
@@ -54,34 +61,26 @@ services:
 - **Cloudflare Pages**：<https://sub-store-workers.pages.dev>
 - [关于前端的更多使用细节](https://github.com/SaintWe/Sub-Store-Workers#%E5%89%8D%E7%AB%AF)
 
-在 `docker-compose.yml` 同目录中执行下面的命令
-
-``` sh
-echo "{}" > ./sub-store.json
-
-echo "{}" > ./root.json
-```
-
 一切准备就绪后在 `docker-compose.yml` 同目录执行
 
 ```
 # 守护启动
-docker-compose up -d
+docker compose up -d
 
 # 打印日志
-docker-compose logs
+docker compose logs
 
 # 更新镜像
-docker-compose pull
+docker compose pull
 
 # 停止容器
-docker-compose stop
+docker compose stop
 
 # 重启容器
-docker-compose restart
+docker compose restart
 
 # 停止并删除容器
-docker-compose down
+docker compose down
 ```
 
 ## 结束语

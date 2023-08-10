@@ -21,7 +21,9 @@ RUN apk add --no-cache nodejs npm tzdata git caddy curl supervisor && \
     rm -rf /Sub-Store && \
     rm -rf $(pnpm store path) && \
     npm uninstall -g pnpm && \
-    apk del git tzdata npm
+    apk del git tzdata npm && \
+    ln -s /Sub-Store/sub-store.json /git/sub-store.json && \
+    ln -s /Sub-Store/root.json /git/root.json
 
 WORKDIR /git
 

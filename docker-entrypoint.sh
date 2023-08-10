@@ -25,6 +25,18 @@ else
     sed -i "s|__download_handle__||g" /etc/caddy/Caddyfile
 fi
 
+if [ ! -d "/Sub-Store" ]; then
+    mkdir /Sub-Store
+fi
+
+if [ ! -f /Sub-Store/root.json ]; then
+    echo "{}" > /Sub-Store/root.json
+fi
+
+if [ ! -f /Sub-Store/sub-store.json ]; then
+    echo "{}" > /Sub-Store/sub-store.json
+fi
+
 /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
 
 exec "$@"
