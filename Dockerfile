@@ -13,13 +13,16 @@ RUN apk add --no-cache nodejs npm tzdata git caddy curl supervisor && \
     git clone https://github.com/SaintWe/Sub-Store-Docker.git /git && \
     cd /git && \
     cp --parents ./supervisor/supervisord.conf /etc/ && \
+    pnpm add express@^4.17.1 && \
+    pnpm add body-parser@^1.19.0 && \
+    pnpm add request@^2.88.2 && \
     rm -f /etc/caddy/Caddyfile && \
     rm -rf /git/.git && \
     curl -fsSLo /usr/bin/supercronic https://github.com/aptible/supercronic/releases/latest/download/supercronic-${TARGETOS}-${TARGETARCH} && \
     chmod +x /usr/bin/supercronic && \
     cp /Sub-Store/backend/sub-store.min.js /git && \
     rm -rf /Sub-Store && \
-    rm -rf $(pnpm store path) && \
+    # rm -rf $(pnpm store path) && \
     npm uninstall -g pnpm && \
     apk del git tzdata npm && \
     ln -s /Sub-Store/sub-store.json /git/sub-store.json && \
